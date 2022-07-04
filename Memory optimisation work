@@ -1,0 +1,11 @@
+Check the Non heap memory issue :
+      For Netty there is a buffer leak detection mechanism. Usually it tracks 1% of buffers.
+ 
+        (Depending on Netty version, the spelling of the flag may differ a little):
+        -Dio.netty.leakDetection.level=advanced
+        Will let you know who accessed the leaked buffer last.
+        To track all buffers, not just 1% (don’t use in production):
+        -Dio.netty.leakDetection.level=paranoid
+        One typical problem to look out for – if you read the request body as a stream, you need to ensure that you fully drain the stream and always close it. Depending on (bugs in) implementation, it may not be enough to just close it.
+
+
